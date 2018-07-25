@@ -1,0 +1,11 @@
+.user-card {
+  cursor: pointer;
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.jumbotron {
+  padding: 30px;
+}

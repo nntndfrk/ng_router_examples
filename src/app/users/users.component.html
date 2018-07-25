@@ -1,0 +1,23 @@
+<div class="alert alert-success" *ngIf="showCreateMessage">
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+        <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+      </div>
+      <span class="alert-text">Пользователь успешно создан</span>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-danger" *ngIf="showDeleteMessage" >
+  <div class="alert-items">
+    <div class="alert-item static">
+      <div class="alert-icon-wrapper">
+        <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+      </div>
+      <span class="alert-text">Пользователь успешно удален</span>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
