@@ -1,50 +1,86 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {User} from '../models/user';
-import {map, pluck} from 'rxjs/operators';
+import {map, pluck, tap} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
+  userData: User[];
+  isLoad = false;
   private usersUrl = 'https://reqres.in/api/users';
 
   constructor(private http: HttpClient) {
   }
 
   getUsers(): Observable<User[]> {
-    // добавляем токен
-    const headers = new HttpHeaders();
-    const token = localStorage.getItem('auth_token');
-    headers.append('Content-Type', 'application/json');
-    headers.append('Authorization', `Bearer ${token}`);
+    if (!this.userData) {
+      // добавляем токен
+      const headers = new HttpHeaders();
+      const token = localStorage.getItem('auth_token');
+      headers.append('Content-Type', 'application/json');
+      headers.append('Authorization', `Bearer ${token}`);
 
-    const params = new HttpParams().set('per_page', '9');
+      const params = new HttpParams().set('per_page', '9');
 
-    return this.http.get(this.usersUrl, {headers: headers, params: params})
-      .pipe(
-        pluck('data'),
-        map((users: User[]) => users.map(this.toUser))
-      );
+      return this.http.get(this.usersUrl, {headers: headers, params: params})
+        .pipe(
+          pluck('data'),
+          map((users: User[]) => users.map(this.toUser)),
+          tap(data => {
+            this.isLoad = true;
+            this.userData = data;
+          })
+        );
+    } else {
+      return of(this.userData);
+    }
+
   }
 
   getUser(id: number): Observable<User> {
-    return this.http.get(`${this.usersUrl}/${id}`)
-      .pipe(
-        pluck('data'),
-        map(this.toUser)
-      );
+    if (!this.isLoad) {
+      return this.http.get(`${this.usersUrl}/${id}`)
+        .pipe(
+          pluck('data'),
+          map(this.toUser)
+        );
+    } else {
+      console.log(id);
+      console.log(this.userData);
+      let curUser = new User();
+      this.userData.forEach(user => {
+        if (user.id === id) {
+          curUser = user;
+        }
+      });
+      return of(curUser);
+    }
+
   }
 
   createUser(user: User) {
-    return this.http.post(this.usersUrl, user);
+    return this.http.post(this.usersUrl, user)
+      .pipe(tap(() => this.userData.push(user)));
   }
 
-  updateUser(user: User) {
-    return this.http.put(`${this.usersUrl}/${user.id}`, user);
+  updateUser(upUser: User) {
+    return this.http.put(`${this.usersUrl}/${upUser.id}`, upUser)
+      .pipe(tap(() => {
+        this.userData.forEach(user => {
+          if (user.id === upUser.id) {
+            user.name = upUser.name;
+            user.username = upUser.username;
+          }
+        });
+      }));
   }
 
   deleteUser(id: number): Observable<any> {
-    return this.http.delete(`${this.usersUrl}/${id}`);
+    return this.http.delete(`${this.usersUrl}/${id}`)
+      .pipe(tap(() => {
+        this.userData = this.userData.filter(user => user.id !== id);
+      }));
   }
 
   /**

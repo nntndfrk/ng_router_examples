@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./user-create.component.css']
 })
 export class UserCreateComponent implements OnInit {
-  user: User = {name: '', username: '', avatar: ''};
+  user: User = {name: '', username: '', avatar: 'http://via.placeholder.com/256x256'};
   successMessage = '';
   errorMessage = '';
 
@@ -20,6 +20,9 @@ export class UserCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.service.getUsers().subscribe(users => {
+      this.user.id = users.length;
+    });
   }
 
   createUser() {

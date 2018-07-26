@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.forEach((params: Params) => {
+    this.activatedRoute.paramMap.subscribe((params: Params) => {
       const action = params.get('action');
       if (action === 'created') {
         this.showCreateMessage = true;

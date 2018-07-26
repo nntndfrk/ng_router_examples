@@ -10,6 +10,9 @@ import {User} from '../../shared/models/user';
 })
 export class UserSingleComponent implements OnInit {
   user: User;
+  users: User[];
+  totalUserCount: number;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -19,7 +22,7 @@ export class UserSingleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.forEach((params: Params) => {
+    this.activatedRoute.paramMap.subscribe((params: Params) => {
       const id = +params.get('id');
       this.service.getUser(id)
         .subscribe(user => {
@@ -28,13 +31,26 @@ export class UserSingleComponent implements OnInit {
           }
         });
     });
+
+    this.service.getUsers().subscribe(users => {
+      this.users = users;
+      this.totalUserCount = users.length;
+    });
   }
 
   deleteUser() {
     this.service.deleteUser(this.user.id)
       .subscribe(() => {
+        this.service.getUsers().subscribe(users => {
+          this.users = users;
+          this.totalUserCount = users.length;
+        });
         this.router.navigate(['/users', {action: 'deleted'}]);
       });
+  }
+
+  getNextId() {
+    return this.user.id += 1;
   }
 
 }
