@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../shared/services/user.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, ParamMap, Params} from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((params: Params) => {
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       const action = params.get('action');
       if (action === 'created') {
         this.showCreateMessage = true;

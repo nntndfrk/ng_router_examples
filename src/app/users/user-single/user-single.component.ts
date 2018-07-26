@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {UserService} from '../../shared/services/user.service';
 import {User} from '../../shared/models/user';
 
@@ -23,7 +23,7 @@ export class UserSingleComponent implements OnInit {
   ngOnInit() {
     // this.activatedRoute.params.subscribe((params: Params) => {
     //   const id = +params['id'];
-    this.activatedRoute.paramMap.subscribe((params: Params) => {
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       const id = +params.get('id');
       this.service.getUser(id)
         .subscribe(user => {
