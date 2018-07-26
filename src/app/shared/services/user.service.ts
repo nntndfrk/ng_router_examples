@@ -7,7 +7,6 @@ import {map, pluck, tap} from 'rxjs/operators';
 @Injectable()
 export class UserService {
   userData: User[];
-  isLoad = false;
   private usersUrl = 'https://reqres.in/api/users';
 
   constructor(private http: HttpClient) {
@@ -28,7 +27,6 @@ export class UserService {
           pluck('data'),
           map((users: User[]) => users.map(this.toUser)),
           tap(data => {
-            this.isLoad = true;
             this.userData = data;
           })
         );
@@ -39,15 +37,13 @@ export class UserService {
   }
 
   getUser(id: number): Observable<User> {
-    if (!this.isLoad) {
+    if (!this.userData) {
       return this.http.get(`${this.usersUrl}/${id}`)
         .pipe(
           pluck('data'),
           map(this.toUser)
         );
     } else {
-      console.log(id);
-      console.log(this.userData);
       let curUser = new User();
       this.userData.forEach(user => {
         if (user.id === id) {

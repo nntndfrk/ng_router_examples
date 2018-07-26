@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./user-create.component.css']
 })
 export class UserCreateComponent implements OnInit {
-  user: User = {name: '', username: '', avatar: 'http://via.placeholder.com/256x256'};
+  user: User = {name: '', username: '', avatar: 'http://via.placeholder.com/128x128'};
   successMessage = '';
   errorMessage = '';
 

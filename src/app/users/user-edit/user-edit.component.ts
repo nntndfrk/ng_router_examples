@@ -21,7 +21,8 @@ export class UserEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const id = +this.activatedRoute.snapshot.paramMap.get('id');
+    // const id = +this.activatedRoute.snapshot.paramMap.get('id');
+    const id = +this.activatedRoute.snapshot.params['id'];
     this.service.getUser(id).subscribe(user => this.user = user);
     this.editInProgress = true;
   }

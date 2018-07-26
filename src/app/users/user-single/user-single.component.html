@@ -8,7 +8,7 @@
     <a [routerLink]="['/users', user.id, 'edit']" class="btn btn-primary btn-sm">Редактировать</a>
     <a (click)="deleteUser()" class="btn btn-danger btn-sm">Удалить</a>
 
-    <!--<a [routerLink]="['/users', user.id+1]" class="btn btn-outline btn-sm" *ngIf="(user.id + 1) < totalUserCount">Далее</a>-->
+    <a (click)="nextUser()" class="btn btn-outline btn-sm">Далее</a>
   </div>
 
 </div>
