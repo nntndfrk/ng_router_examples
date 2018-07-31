@@ -30,4 +30,9 @@ export class AlertsComponent implements OnInit {
     this.messagesService.submit();
   }
 
+  close() {
+    this.isShow = false;
+    this.messagesService.submit(false);
+  }
+
 }

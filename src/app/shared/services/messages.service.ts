@@ -20,8 +20,8 @@ export class MessagesService {
     return this.submit$.asObservable();
   }
 
-  submit() {
-    this.submit$.next(true);
+  submit(confirmation = true) {
+    this.submit$.next(confirmation);
   }
 
 }
