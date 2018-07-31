@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from './shared/services/auth.service';
 import {Router} from '@angular/router';
+import {MessagesService} from './shared/services/messages.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import {Router} from '@angular/router';
 export class AppComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private msgService: MessagesService
   ) {
   }
 
@@ -22,7 +24,18 @@ export class AppComponent implements OnInit {
   }
 
   logOut() {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login'])
+      .then((isNavigate) => {
+        if (isNavigate) {
+          this.authService.logout();
+        }
+      })
+      .catch((err) => {
+        this.msgService.setMessage({
+          type: 'danger',
+          body: err
+        });
+      });
+
   }
 }
