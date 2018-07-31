@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../shared/models/user';
 import {UserService} from '../../shared/services/user.service';
 import {Router} from '@angular/router';
+import {MessagesService} from '../../shared/services/messages.service';
 
 @Component({
   selector: 'app-user-create',
@@ -15,7 +16,8 @@ export class UserCreateComponent implements OnInit {
 
   constructor(
     private service: UserService,
-    private router: Router
+    private router: Router,
+    private msgService: MessagesService
   ) {
   }
 
@@ -26,12 +28,12 @@ export class UserCreateComponent implements OnInit {
   }
 
   createUser() {
-    this.successMessage = '';
-    this.errorMessage = '';
-
     this.service.createUser(this.user)
       .subscribe(() => {
-        this.successMessage = 'Пользователь успешно создан!';
+        this.msgService.setMessage({
+          type: 'success',
+          body: 'Пользователь успешно создан!'
+        });
 
         setTimeout(() => {
           this.router.navigate(['/users', {action: 'created'}]);

@@ -22,6 +22,7 @@ export class UserService {
 
       const params = new HttpParams().set('per_page', '9');
 
+
       return this.http.get(this.usersUrl, {headers: headers, params: params})
         .pipe(
           pluck('data'),

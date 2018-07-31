@@ -12,6 +12,8 @@ import {AuthService} from './shared/services/auth.service';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AboutComponent} from './about/about.component';
 import {AuthGuard} from './shared/guards/auth-guard.service';
+import {MessagesService} from './shared/services/messages.service';
+import { AlertsComponent } from './alerts/alerts.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,7 @@ import {AuthGuard} from './shared/guards/auth-guard.service';
     LoginComponent,
     NotFoundComponent,
     AboutComponent,
+    AlertsComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +33,7 @@ import {AuthGuard} from './shared/guards/auth-guard.service';
   ],
   providers: [
     AuthService,
+    MessagesService,
     AuthGuard,
   ],
   bootstrap: [AppComponent]

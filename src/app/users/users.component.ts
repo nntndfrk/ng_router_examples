@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../shared/services/user.service';
 import {ActivatedRoute, ParamMap, Params} from '@angular/router';
+import {MessagesService} from '../shared/services/messages.service';
 
 @Component({
   selector: 'app-users',
@@ -8,12 +9,11 @@ import {ActivatedRoute, ParamMap, Params} from '@angular/router';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  showCreateMessage = false;
-  showDeleteMessage = false;
 
   constructor(
     private service: UserService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private msgService: MessagesService
   ) {
   }
 
@@ -21,21 +21,18 @@ export class UsersComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       const action = params.get('action');
       if (action === 'created') {
-        this.showCreateMessage = true;
-        this.clearMessages();
+        this.msgService.setMessage({
+          type: 'success',
+          body: 'Пользователь успешно создан'
+        });
       }
       if (action === 'deleted') {
-        this.showDeleteMessage = true;
-        this.clearMessages();
+        this.msgService.setMessage({
+          type: 'info',
+          body: 'Пользователь успешно удален'
+        });
       }
     });
-  }
-
-  clearMessages() {
-    setTimeout(() => {
-      this.showCreateMessage = false;
-      this.showDeleteMessage = false;
-    }, 5000);
   }
 
 }
