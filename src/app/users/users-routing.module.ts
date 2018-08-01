@@ -12,9 +12,11 @@ import {CanDeactivateGuard} from '../shared/guards/can-deactivate-guard.service'
 
 const routes: Routes = [
   {
-    path: 'users',
+    path: '',
     component: UsersComponent,
-    canActivate: [AuthGuard],
+    /* Можно не указывать canActivateChild, т.к. стоит Guard canLoad в app-routing.module */
+    /* и модуль UsersModule не будет загружен без авторизации */
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
