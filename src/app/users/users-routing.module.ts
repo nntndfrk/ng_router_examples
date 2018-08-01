@@ -14,7 +14,9 @@ const routes: Routes = [
   {
     path: '',
     component: UsersComponent,
-    canActivate: [AuthGuard],
+    /* Можно не указывать canActivateChild, т.к. стоит Guard canLoad в app-routing.module */
+    /* и модуль UsersModule не будет загружен без авторизации */
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: '',
