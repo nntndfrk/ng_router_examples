@@ -23,7 +23,8 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: userForm.get('name').invalid && userForm.get('name').touched}"
+        [ngClass]="{ invalid: userForm.get('name').invalid && 
+                     (userForm.get('name').touched && userForm.get('name').dirty) }"
       >
         <input
           type="text"
@@ -43,7 +44,8 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: userForm.get('login').invalid && userForm.get('login').touched}"
+        [ngClass]="{invalid: userForm.get('login').invalid && 
+                    (userForm.get('login').touched && userForm.get('login').dirty)}"
       >
         <input
           type="text"
@@ -64,7 +66,8 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: userForm.get('email').invalid && userForm.get('email').touched}"
+        [ngClass]="{invalid: userForm.get('email').invalid && 
+                    (userForm.get('email').touched && userForm.get('email').dirty )}"
       >
         <input
           type="email"
@@ -73,10 +76,10 @@
           formControlName="email"
         >
         <ng-container *ngIf="userForm.get('email').invalid">
-          <span class="tooltip-content" *ngIf="userForm.get('email').errors['required']">
+          <span class="tooltip-content" *ngIf="userForm.get('email').errors?.required">
             e-mail не может быть пустым
           </span>
-          <span class="tooltip-content" *ngIf="userForm.get('email').errors['email']">
+          <span class="tooltip-content" *ngIf="userForm.get('email').errors?.email">
             введите правильный e-mail
           </span>
         </ng-container>
@@ -90,7 +93,8 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: userForm.get('phoneNumber').invalid && userForm.get('phoneNumber').touched}"
+        [ngClass]="{invalid: userForm.get('phoneNumber').invalid && 
+                    (userForm.get('phoneNumber').touched && userForm.get('phoneNumber').dirty)}"
       >
         <input
           type="tel"
@@ -99,10 +103,10 @@
           formControlName="phoneNumber"
         >
         <ng-container *ngIf="userForm.get('phoneNumber').invalid">
-          <span class="tooltip-content" *ngIf="userForm.get('phoneNumber').errors['required']">
+          <span class="tooltip-content" *ngIf = "userForm.get('phoneNumber').errors?.required">
             Телефонный номер не может быть пустым
           </span>
-          <span class="tooltip-content" *ngIf="userForm.get('phoneNumber').errors['onlyNumberError']">
+          <span class="tooltip-content" *ngIf = "userForm.get('phoneNumber').errors?.onlyNumberError">
             Телефонный номер может состоять только из цифр
           </span>
         </ng-container>

@@ -5,6 +5,9 @@ import {Router} from '@angular/router';
 import {MessagesService} from '../../shared/services/messages.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 
+
+const emptyString = '';
+
 @Component({
   selector: 'app-user-create',
   templateUrl: './user-create.component.html',
@@ -25,34 +28,24 @@ export class UserCreateComponent implements OnInit {
   ngOnInit() {
     this.editInProgress = true;
     this.userForm = new FormGroup({
-      photo: new FormControl(
-        ''
-      ),
-      name: new FormControl(
-        '',
+      photo: new FormControl(emptyString),
+      name: new FormControl(emptyString,
         [Validators.required]
       ),
-      login: new FormControl(
-        '',
+      login: new FormControl(emptyString,
         [Validators.required]
       ),
-      email: new FormControl(
-        '',
+      email: new FormControl(emptyString,
         [
           Validators.required,
           Validators.email
         ]
       ),
-      phoneNumber: new FormControl(
-        '',
+      phoneNumber: new FormControl(emptyString,
         [Validators.required, this.checkForNumers]
       ),
-      dob: new FormControl(
-        ''
-      ),
-      other: new FormControl(
-        ''
-      )
+      dob: new FormControl(emptyString),
+      other: new FormControl(emptyString)
     });
 
   }

@@ -15,7 +15,7 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: login.invalid && login.touched}"
+        [ngClass]="{invalid: login.invalid && (login.touched && login.dirty)}"
       >
         <input
           class="username"
@@ -36,7 +36,7 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: email.invalid && email.touched}"
+        [ngClass]="{invalid: email.invalid && (email.touched && email.dirty)}"
       >
         <input
           class="username"
@@ -58,7 +58,7 @@
         aria-haspopup="true"
         role="tooltip"
         class="tooltip tooltip-validation tooltip-sm"
-        [ngClass]="{invalid: password.invalid && password.touched}"
+        [ngClass]="{invalid: password.invalid && (password.touched && password.dirty)}"
       >
         <input
           class="password"
