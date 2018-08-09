@@ -85,6 +85,23 @@
           </span>
         </ng-container>
       </label>
+      <div class="form-group">
+        <label for="role" class="required">Выберите роль пользователя</label>
+        <div class="select">
+          <select
+            id="role"
+            name="role"
+            ngModel
+            required
+            #role="ngModel"
+          >
+            <option
+              *ngFor="let role of userRoles"
+              [value]="role"
+            >{{role}}</option>
+          </select>
+        </div>
+      </div>
       <button
         class="btn btn-primary"
         type="submit"

@@ -76,7 +76,6 @@ export class UserCreateComponent implements OnInit {
         }, 3000);
 
       });
-    console.log(this.userForm);
   }
 
   onAttachPic(event: any) {

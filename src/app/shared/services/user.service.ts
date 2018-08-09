@@ -59,7 +59,10 @@ export class UserService {
 
   createUser(user: User) {
     return this.http.post(this.usersUrl, user)
-      .pipe(tap(() => this.userData.push(user)));
+      .pipe(tap(() => {
+        user.id = this.userData.length;
+        this.userData.push(user);
+      }));
   }
 
   updateUser(upUser: User) {
@@ -94,18 +97,4 @@ export class UserService {
     };
   }
 
-
-  // private handleError(err) {
-  //   let errMessage: string;
-  //
-  //   if (err instanceof Response) {
-  //     let body   = err.json() || '';
-  //     let error  = body.error || JSON.stringify(body);
-  //     errMessage = `${err.status} - ${err.statusText || ''} ${error}`;
-  //   } else {
-  //     errMessage = err.message ? err.message : err.toString();
-  //   }
-  //
-  //   return Observable.throw(errMessage);
-  // }
 }

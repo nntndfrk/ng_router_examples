@@ -12,7 +12,8 @@ import {NgForm} from '@angular/forms';
 export class RegistrationComponent implements OnInit {
   editInProgress = false;
   @ViewChild('form') form: NgForm;
-
+  userRoles = ['admin', 'manager', 'HR'];
+  role: string;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -35,7 +36,6 @@ export class RegistrationComponent implements OnInit {
   }
 
   submitForm() {
-    // console.log(this.form);
     this.editInProgress = false;
     this.authService.login(this.form.value.login, this.form.value.password)
       .subscribe(
