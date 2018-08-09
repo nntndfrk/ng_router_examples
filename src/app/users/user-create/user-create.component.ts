@@ -30,10 +30,7 @@ export class UserCreateComponent implements OnInit {
   createUser() {
     this.service.createUser(this.user)
       .subscribe(() => {
-        this.msgService.setMessage({
-          type: 'success',
-          body: 'Пользователь успешно создан!'
-        });
+
 
         setTimeout(() => {
           this.router.navigate(['/users', {action: 'created'}]);
