@@ -13,7 +13,9 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {AboutComponent} from './about/about.component';
 import {AuthGuard} from './shared/guards/auth-guard.service';
 import {MessagesService} from './shared/services/messages.service';
-import { AlertsComponent } from './alerts/alerts.component';
+import {AlertsComponent} from './alerts/alerts.component';
+import {RegistrationComponent} from './registration/registration.component';
+import {CanDeactivateGuard} from './shared/guards/can-deactivate-guard.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { AlertsComponent } from './alerts/alerts.component';
     NotFoundComponent,
     AboutComponent,
     AlertsComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import { AlertsComponent } from './alerts/alerts.component';
     AuthService,
     MessagesService,
     AuthGuard,
+    CanDeactivateGuard
   ],
   bootstrap: [AppComponent]
 })

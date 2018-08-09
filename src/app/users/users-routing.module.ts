@@ -17,15 +17,16 @@ const routes: Routes = [
     /* Можно не указывать canActivateChild, т.к. стоит Guard canLoad в app-routing.module */
     /* и модуль UsersModule не будет загружен без авторизации */
     canActivateChild: [AuthGuard],
+    resolve: {users: UserListResolve},
     children: [
       {
         path: '',
-        component: UsersListComponent,
-        resolve: {users: UserListResolve}
+        component: UsersListComponent
       },
       {
         path: 'create',
-        component: UserCreateComponent
+        component: UserCreateComponent,
+        canDeactivate: [CanDeactivateGuard]
       },
       {
         path: ':id',

@@ -4,6 +4,8 @@ import {LoginComponent} from './login/login.component';
 import {AboutComponent} from './about/about.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {AuthGuard} from './shared/guards/auth-guard.service';
+import {RegistrationComponent} from './registration/registration.component';
+import {CanDeactivateGuard} from './shared/guards/can-deactivate-guard.service';
 
 const routes: Routes = [
   {
@@ -14,6 +16,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'registration',
+    component: RegistrationComponent,
+    canDeactivate: [CanDeactivateGuard]
   },
   {
     path: 'about',
