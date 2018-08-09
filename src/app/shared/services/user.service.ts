@@ -10,6 +10,7 @@ export class UserService {
   private usersUrl = 'https://reqres.in/api/users';
 
   constructor(private http: HttpClient) {
+    this.getUsers();
   }
 
   getUsers(): Observable<User[]> {
@@ -88,7 +89,8 @@ export class UserService {
       id: user.id,
       name: `${user.first_name} ${user.last_name}`,
       username: user.first_name,
-      avatar: user.avatar
+      avatar: user.avatar,
+      password: '123456'
     };
   }
 

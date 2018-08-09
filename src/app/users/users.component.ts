@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../shared/services/user.service';
 import {ActivatedRoute, ParamMap, Params} from '@angular/router';
 import {MessagesService} from '../shared/services/messages.service';
+import {User} from '../shared/models/user';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +10,7 @@ import {MessagesService} from '../shared/services/messages.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
+  users: User[];
   constructor(
     private service: UserService,
     private activatedRoute: ActivatedRoute,
@@ -18,6 +19,9 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.activatedRoute.data.subscribe((data: { users: User[] }) => {
+      this.users = data.users;
+    });
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       const action = params.get('action');
       if (action === 'created') {

@@ -3,4 +3,5 @@ export class User {
   name: string;
   username: string;
   avatar: string;
+  password?: string;
 }

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ClarityModule} from '@clr/angular';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {UserService} from '../shared/services/user.service';
 import {UsersRoutingModule} from './users-routing.module';
@@ -19,7 +19,8 @@ import {UserListResolve} from '../shared/guards/user-list-resolver.service';
     CommonModule,
     FormsModule,
     ClarityModule,
-    UsersRoutingModule
+    ReactiveFormsModule,
+    UsersRoutingModule,
   ],
   declarations: [
     UsersComponent,

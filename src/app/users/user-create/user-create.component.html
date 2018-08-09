@@ -1,19 +1,138 @@
-<div *ngIf="user">
-  <form (ngSubmit)="createUser()">
-
+<form [formGroup]="userForm" (ngSubmit)="createUser()">
+  <section class="form-block">
+    <label>Создание нового сотрудника</label>
+    <div class="clr-row" *ngIf="photoUrl">
+      <div class="clr-col-4">
+        <img [src]="photoUrl" alt="{{photoUrl}}" class="card-media-image" />
+      </div>
+    </div>
     <div class="form-group">
-      <label>Имя</label>
-      <input type="text" class="form-control" name="name" required [(ngModel)]="user.name">
+      <label for="photo">Фото</label>
+      <input
+        type="file"
+        id="photo"
+        size="35"
+        (change)="onAttachPic($event)"
+        formControlName="photo"
+      >
+    </div>
+    <div class="form-group">
+      <label for="name" class="required">Имя</label>
+      <label
+        for="name"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: userForm.get('name').invalid && userForm.get('name').touched}"
+      >
+        <input
+          type="text"
+          id="name"
+          size="35"
+          formControlName="name"
+        >
+        <span class="tooltip-content">
+          Имя не может быть пустым
+        </span>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="login" class="required">Логин</label>
+      <label
+        for="login"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: userForm.get('login').invalid && userForm.get('login').touched}"
+      >
+        <input
+          type="text"
+          id="login"
+          size="35"
+          formControlName="login"
+        >
+        <span class="tooltip-content">
+          Логин не может быть пустым
+        </span>
+      </label>
+
+    </div>
+    <div class="form-group">
+      <label for="email" class="required">E-mail</label>
+      <label
+        for="email"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: userForm.get('email').invalid && userForm.get('email').touched}"
+      >
+        <input
+          type="email"
+          id="email"
+          size="35"
+          formControlName="email"
+        >
+        <ng-container *ngIf="userForm.get('email').invalid">
+          <span class="tooltip-content" *ngIf="userForm.get('email').errors['required']">
+            e-mail не может быть пустым
+          </span>
+          <span class="tooltip-content" *ngIf="userForm.get('email').errors['email']">
+            введите правильный e-mail
+          </span>
+        </ng-container>
+      </label>
+
+    </div>
+    <div class="form-group">
+      <label for="phone" class="required">Телефон</label>
+      <label
+        for="phone"
+        aria-haspopup="true"
+        role="tooltip"
+        class="tooltip tooltip-validation tooltip-sm"
+        [ngClass]="{invalid: userForm.get('phoneNumber').invalid && userForm.get('phoneNumber').touched}"
+      >
+        <input
+          type="tel"
+          id="phone"
+          size="35"
+          formControlName="phoneNumber"
+        >
+        <ng-container *ngIf="userForm.get('phoneNumber').invalid">
+          <span class="tooltip-content" *ngIf="userForm.get('phoneNumber').errors['required']">
+            Телефонный номер не может быть пустым
+          </span>
+          <span class="tooltip-content" *ngIf="userForm.get('phoneNumber').errors['onlyNumberError']">
+            Телефонный номер может состоять только из цифр
+          </span>
+        </ng-container>
+      </label>
+
+    </div>
+    <div class="form-group">
+      <label for="dob">Дата рождения</label>
+      <input
+        type="date"
+        id="dob"
+        size="35"
+        clrDate
+        formControlName="dob"
+      >
+
     </div>
 
     <div class="form-group">
-      <label>Логин</label>
-      <input type="text" class="form-control" name="username" required [(ngModel)]="user.username">
+      <label for="other">Другие сведения</label>
+      <textarea
+        id="other"
+        rows="3"
+        formControlName="other"
+      ></textarea>
     </div>
-
-
-    <button type="submit" class="btn btn-success">Создать пользователя</button>
-
-  </form>
-
-</div>
+    <button
+      class="btn btn-primary"
+      type="submit"
+      [disabled]="userForm.invalid"
+    >Создать сотрудника</button>
+  </section>
+</form>

@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../shared/services/auth.service';
 import {Router} from '@angular/router';
 import {MessagesService} from '../shared/services/messages.service';
+import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
 })
-export class LoginComponent implements OnInit {
-  credentials = {username: '', password: ''};
-  errorMessage = '';
+export class RegistrationComponent implements OnInit {
+  editInProgress = false;
+  @ViewChild('form') form: NgForm;
 
   constructor(
     private authService: AuthService,
@@ -25,24 +26,29 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/users']);
     }
 
+    this.form.valueChanges.subscribe(() => {
+        if (this.form.touched || this.form.dirty) {
+          this.editInProgress = true;
+        }
+      }
+    );
   }
 
-  login() {
-    this.errorMessage = '';
-
-    this.authService.login(this.credentials.username, this.credentials.password)
+  submitForm() {
+    // console.log(this.form);
+    this.editInProgress = false;
+    this.authService.login(this.form.value.login, this.form.value.password)
       .subscribe(
         () => {
           this.msgService.setMessage({
             type: 'success',
-            body: `${this.credentials.username}, Вы успешно вошли в систему. Добро пожаловать!`
+            body: `${this.form.value.login}, Вы успешно вошли в систему. Добро пожаловать!`
           });
           setTimeout(() => {
             this.router.navigate(['/users']);
           }, 2000);
         },
         err => {
-          this.errorMessage = err.error.error;
           this.msgService.setMessage({
             type: 'danger',
             body: err.error.error
@@ -51,8 +57,8 @@ export class LoginComponent implements OnInit {
       );
   }
 
-  goToRegistration() {
-    this.router.navigate(['registration']);
+  goToLogin() {
+    this.router.navigate(['login']);
   }
 
 }
