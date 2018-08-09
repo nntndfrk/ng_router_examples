@@ -11,6 +11,7 @@ import {NgForm} from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
   editInProgress = false;
+  
   @ViewChild('form') form: NgForm;
   userRoles = ['admin', 'manager', 'HR'];
   role: string;
@@ -27,8 +28,10 @@ export class RegistrationComponent implements OnInit {
       this.router.navigate(['/users']);
     }
 
+    // наиболее часто используется в подходе Reactive Forms
     this.form.valueChanges.subscribe(() => {
         if (this.form.touched || this.form.dirty) {
+          //console.log(this.editInProgress);
           this.editInProgress = true;
         }
       }

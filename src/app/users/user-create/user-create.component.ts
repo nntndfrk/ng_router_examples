@@ -29,7 +29,7 @@ export class UserCreateComponent implements OnInit {
     this.editInProgress = true;
     this.userForm = new FormGroup({
       photo: new FormControl(emptyString),
-      name: new FormControl(emptyString,
+      name: new FormControl("John",
         [Validators.required]
       ),
       login: new FormControl(emptyString,
