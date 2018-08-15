@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {User} from '../models/user';
-import {catchError, map, pluck, tap} from 'rxjs/operators';
+import {catchError, map, pluck, retry, tap} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -85,9 +85,9 @@ export class UserService {
 
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.usersUrl}/${id}`)
-      .pipe(tap(() => {
-        this.userData = this.userData.filter(user => user.id !== id);
-      }));
+      .pipe(
+        retry(2)
+      );
   }
 
   checkExistingId(id) {
