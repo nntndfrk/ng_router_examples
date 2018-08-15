@@ -112,5 +112,14 @@ export class UserService {
     };
   }
 
+  uploadFile(file: File): Observable<File> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'multipart/form-data'),
+    };
+    return this.http.post<File>(`${this.usersUrl}/file`, formData, options);
+  }
+
 
 }
