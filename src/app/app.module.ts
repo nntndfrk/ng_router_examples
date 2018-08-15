@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {ClarityModule} from '@clr/angular';
 
@@ -16,6 +16,7 @@ import {MessagesService} from './shared/services/messages.service';
 import {AlertsComponent} from './alerts/alerts.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {CanDeactivateGuard} from './shared/guards/can-deactivate-guard.service';
+import {AuthInterceptor} from './shared/services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {CanDeactivateGuard} from './shared/guards/can-deactivate-guard.service';
     AuthService,
     MessagesService,
     AuthGuard,
-    CanDeactivateGuard
+    CanDeactivateGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

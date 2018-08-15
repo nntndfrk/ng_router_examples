@@ -17,9 +17,7 @@ export class UserService {
     if (!this.userData) {
       // добавляем токен
       const headers = new HttpHeaders();
-      const token = localStorage.getItem('auth_token');
       headers.append('Content-Type', 'application/json');
-      headers.append('Authorization', `Bearer ${token}`);
 
       const params = new HttpParams().set('per_page', '9');
 
