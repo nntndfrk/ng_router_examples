@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 import {User} from '../models/user';
-import {map, pluck, tap} from 'rxjs/operators';
+import {catchError, map, pluck, tap} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -39,11 +39,19 @@ export class UserService {
   }
 
   getUser(id: number): Observable<User> {
-    if (!this.userData) {
-      return this.http.get(`${this.usersUrl}/${id}`)
+    if (!this.userData || !this.checkExistingId(id)) {
+      return this.http.get<Observable<User>>(`${this.usersUrl}/${id}`)
         .pipe(
           pluck('data'),
-          map(this.toUser)
+          map(this.toUser),
+          // обработка ошибки Http-запроса
+          catchError((err: HttpErrorResponse) => {
+            if (err.status === 404) {
+              return throwError('Not found');
+            } else {
+              return throwError(err.message);
+            }
+          })
         );
     } else {
       let curUser = new User();
@@ -84,6 +92,15 @@ export class UserService {
       }));
   }
 
+  checkExistingId(id) {
+    for (let i = 0; i < this.userData.length; i++) {
+      if (this.userData[i].id === id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * Преобразовать данные "на лету" в тот формат который нужен нам
    */
@@ -96,5 +113,6 @@ export class UserService {
       password: '123456'
     };
   }
+
 
 }
