@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 import {User} from '../models/user';
-import {map, pluck, tap} from 'rxjs/operators';
+import {catchError, map, pluck, retry, tap} from 'rxjs/operators';
 
 @Injectable()
 export class UserService {
@@ -17,9 +17,7 @@ export class UserService {
     if (!this.userData) {
       // добавляем токен
       const headers = new HttpHeaders();
-      const token = localStorage.getItem('auth_token');
       headers.append('Content-Type', 'application/json');
-      headers.append('Authorization', `Bearer ${token}`);
 
       const params = new HttpParams().set('per_page', '9');
 
@@ -39,11 +37,19 @@ export class UserService {
   }
 
   getUser(id: number): Observable<User> {
-    if (!this.userData) {
-      return this.http.get(`${this.usersUrl}/${id}`)
+    if (!this.userData || !this.checkExistingId(id)) {
+      return this.http.get<Observable<User>>(`${this.usersUrl}/${id}`)
         .pipe(
           pluck('data'),
-          map(this.toUser)
+          map(this.toUser),
+          // обработка ошибки Http-запроса
+          catchError((err: HttpErrorResponse) => {
+            if (err.status === 404) {
+              return throwError('Not found');
+            } else {
+              return throwError(err.message);
+            }
+          })
         );
     } else {
       let curUser = new User();
@@ -79,9 +85,18 @@ export class UserService {
 
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.usersUrl}/${id}`)
-      .pipe(tap(() => {
-        this.userData = this.userData.filter(user => user.id !== id);
-      }));
+      .pipe(
+        retry(2)
+      );
+  }
+
+  checkExistingId(id) {
+    for (let i = 0; i < this.userData.length; i++) {
+      if (this.userData[i].id === id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -96,5 +111,15 @@ export class UserService {
       password: '123456'
     };
   }
+
+  uploadFile(file: File): Observable<File> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    const options = {
+      headers: new HttpHeaders().set('Content-Type', 'multipart/form-data'),
+    };
+    return this.http.post<File>(`${this.usersUrl}/file`, formData, options);
+  }
+
 
 }
