@@ -26,7 +26,6 @@ export class UserCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.editInProgress = true;
     this.userForm = new FormGroup({
       photo: new FormControl(emptyString),
       name: new FormControl(emptyString,
@@ -47,6 +46,13 @@ export class UserCreateComponent implements OnInit {
       dob: new FormControl(emptyString),
       other: new FormControl(emptyString)
     });
+
+    this.userForm.valueChanges.subscribe(() => {
+        if (this.userForm.touched || this.userForm.dirty) {
+          this.editInProgress = true;
+        }
+      }
+    );
 
   }
 
