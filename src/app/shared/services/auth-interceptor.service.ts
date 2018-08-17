@@ -2,10 +2,11 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest, HttpResponse
 } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor
@@ -20,6 +21,15 @@ export class AuthInterceptor
         'Authorization': `Bearer ${token}`
       }
     });
-    return next.handle(newReq);
+    return next.handle(newReq).pipe(
+      tap(
+        ev => {
+          if (ev instanceof HttpResponse) {
+            console.log(ev); // логирование запросов
+          }
+        },
+        err => console.error(err) // логирование ошибок
+      )
+    );
   }
 }

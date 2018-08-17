@@ -15,9 +15,8 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     if (!this.userData) {
-      // добавляем токен
       const headers = new HttpHeaders();
-      headers.append('Content-Type', 'application/json');
+      headers.set('Content-Type', 'application/json');
 
       const params = new HttpParams().set('per_page', '9');
 
