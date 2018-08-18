@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {UsersComponent} from './users.component';
-import {UsersListComponent} from './users-list/users-list.component';
-import {UserListResolve} from '../shared/guards/user-list-resolver.service';
-import {UserSingleComponent} from './user-single/user-single.component';
-import {UserEditComponent} from './user-edit/user-edit.component';
-import {UserCreateComponent} from './user-create/user-create.component';
-import {AuthGuard} from '../shared/guards/auth-guard.service';
-import {CanDeactivateGuard} from '../shared/guards/can-deactivate-guard.service';
+import { UsersComponent } from './users.component';
+import { UsersListComponent } from './users-list/users-list.component';
+import { UserListResolve } from '../shared/guards/user-list-resolver.service';
+import { UserSingleComponent } from './user-single/user-single.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { AuthGuard } from '../shared/guards/auth-guard.service';
+import { CanDeactivateGuard } from '../shared/guards/can-deactivate-guard.service';
 
 const routes: Routes = [
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
       {
         path: '',
         component: UsersListComponent,
-        resolve: {users: UserListResolve}
+        resolve: { users: UserListResolve }
       },
       {
         path: 'create',
