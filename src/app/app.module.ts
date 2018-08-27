@@ -17,6 +17,8 @@ import {AlertsComponent} from './alerts/alerts.component';
 import {RegistrationComponent} from './registration/registration.component';
 import {CanDeactivateGuard} from './shared/guards/can-deactivate-guard.service';
 import {AuthInterceptor} from './shared/services/auth-interceptor.service';
+import {PostsModule} from './posts/posts.module';
+import {UtilsService} from './shared/services/utils.service';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import {AuthInterceptor} from './shared/services/auth-interceptor.service';
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    PostsModule,
     AppRoutingModule
   ],
   providers: [
@@ -40,6 +43,7 @@ import {AuthInterceptor} from './shared/services/auth-interceptor.service';
     MessagesService,
     AuthGuard,
     CanDeactivateGuard,
+    UtilsService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

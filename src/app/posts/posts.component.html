@@ -1,0 +1,38 @@
+<div>
+  <label>Выберите цвет</label>
+</div>
+
+<div class="radio">
+  <input type="radio" name="gridRadios" id="color1" (click)="color='lightgreen'">
+  <label for="color1">Green</label>
+</div>
+
+<div class="radio">
+  <input type="radio" name="gridRadios" id="color2" (click)="color='yellow'">
+  <label for="color2">Yellow</label>
+</div>
+<div class="radio">
+  <input type="radio" name="gridRadios" id="color3" (click)="color='cyan'">
+  <label for="color3">Cyan</label>
+</div>
+<div class="radio">
+  <input type="radio" name="gridRadios" id="color4" (click)="color=''">
+  <label for="color4">Default</label>
+</div>
+
+<div class="row" *ngFor="let post of posts | async">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="card">
+      <div class="card-header" appPrimaryColor>
+        {{post.title}}
+      </div>
+      <div
+        class="card-block"
+        [appHighlight]="color"
+        [defaultColor]="'violet'"
+      >
+        <div class="card-text" [innerHtml]="nl2br(post.body)"></div>
+      </div>
+    </div>
+  </div>
+</div>
