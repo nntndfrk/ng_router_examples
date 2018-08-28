@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostBinding, HostListener, Input, OnInit} from '@angular/core';
+import {Directive, ElementRef, HostBinding, HostListener, Input, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appHighlight]'
@@ -10,7 +10,10 @@ export class HighlightDirective implements OnInit {
   // @HostBinding через свойство класса
   @HostBinding('style.cursor') cursor;
 
-  constructor(private el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2
+  ) {
   }
 
   // @HostBinding через геттер
@@ -21,7 +24,6 @@ export class HighlightDirective implements OnInit {
   ngOnInit() {
     // this.cursor = 'move';
     this.cursor = 'pointer';
-    setTimeout(() => this.cursor = 'move', 1000 * 2);
   }
 
   @HostListener('mouseenter') onMouseEnter() {
@@ -33,7 +35,7 @@ export class HighlightDirective implements OnInit {
   }
 
   private highlight(color: string) {
-    this.el.nativeElement.style.backgroundColor = color;
+    this.renderer.setStyle(this.el.nativeElement, 'background-color', color);
   }
 
 }
