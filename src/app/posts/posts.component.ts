@@ -14,8 +14,7 @@ export class PostsComponent implements OnInit {
   private posts$: Observable<Post[]>;
 
   constructor(
-    private service: PostsService,
-    private utils: UtilsService
+    private service: PostsService
   ) {
   }
 
@@ -26,9 +25,4 @@ export class PostsComponent implements OnInit {
   ngOnInit() {
     this.posts$ = this.service.getPosts();
   }
-
-  nl2br(text: string): string {
-    return this.utils.nl2br(text);
-  }
-
 }

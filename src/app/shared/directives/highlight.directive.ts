@@ -22,11 +22,11 @@ export class HighlightDirective implements OnInit {
   }
 
   ngOnInit() {
-    // this.cursor = 'move';
     this.cursor = 'pointer';
   }
 
-  @HostListener('mouseenter') onMouseEnter() {
+  @HostListener('mouseenter', ['$event']) onMouseEnter(event) {
+    console.log(event);
     this.highlight(this.highlightColor || this.defaultColor || '#e0f4ff');
   }
 
