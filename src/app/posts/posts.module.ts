@@ -7,6 +7,8 @@ import {PostsService} from './posts.service';
 import {HighlightDirective} from '../shared/directives/highlight.directive';
 import {PrimaryColorDirective} from '../shared/directives/primary-color.directive';
 import {Nl2brDirective} from '../shared/directives/nl2br.directive';
+import {SpinnerDirective} from '../shared/directives/spinner.directive';
+import {SpinnerComponent} from '../shared/components/spinner.component';
 
 @NgModule({
   imports: [
@@ -17,9 +19,12 @@ import {Nl2brDirective} from '../shared/directives/nl2br.directive';
     PostsComponent,
     HighlightDirective,
     PrimaryColorDirective,
-    Nl2brDirective
+    Nl2brDirective,
+    SpinnerDirective,
+    SpinnerComponent
   ],
-  providers: [PostsService]
+  providers: [PostsService],
+  entryComponents: [SpinnerComponent]
 })
 export class PostsModule {
 }
