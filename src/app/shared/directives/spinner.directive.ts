@@ -17,7 +17,7 @@ export class SpinnerDirective {
       this.viewContainerRef.clear();
       const cmpFactory = this.cfr.resolveComponentFactory(SpinnerComponent);
       this.viewContainerRef.createComponent(cmpFactory);
-    } else if (!condition) {
+    } else {
       this.viewContainerRef.clear();
       this.viewContainerRef.createEmbeddedView(this.templateRef);
     }
