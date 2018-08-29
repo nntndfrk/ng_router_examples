@@ -9,6 +9,7 @@ import {PrimaryColorDirective} from '../shared/directives/primary-color.directiv
 import {Nl2brDirective} from '../shared/directives/nl2br.directive';
 import {SpinnerDirective} from '../shared/directives/spinner.directive';
 import {SpinnerComponent} from '../shared/components/spinner.component';
+import {TextReducerPipe} from '../shared/pipes/text-reducer.pipe';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {SpinnerComponent} from '../shared/components/spinner.component';
     PrimaryColorDirective,
     Nl2brDirective,
     SpinnerDirective,
-    SpinnerComponent
+    SpinnerComponent,
+    TextReducerPipe,
   ],
   providers: [PostsService],
   entryComponents: [SpinnerComponent]

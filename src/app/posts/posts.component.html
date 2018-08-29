@@ -32,7 +32,9 @@
           [appHighlight]="color"
           [defaultColor]="'violet'"
         >
-          <div class="card-text" [appNl2br]="post.body"></div>
+          <div class="card-text">{{post.body | textReducer:15}}</div>
+          <hr>
+          <div class="card-text" [appNl2br]="post.body" #text></div>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import {UtilsService} from '../services/utils.service';
   selector: '[appNl2br]'
 })
 export class Nl2brDirective {
-  @Input('appNl2br') appNl2br: string;
+  @Input() appNl2br: string;
 
   constructor(
     private el: ElementRef,
