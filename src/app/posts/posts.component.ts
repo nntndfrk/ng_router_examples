@@ -25,7 +25,7 @@ export class PostsComponent implements OnInit {
 
   ngOnInit() {
     this.service.getPosts()
-      .pipe(delay(3 * 1000))
+      .pipe(delay(2 * 1000))
       .subscribe((data: Post[]) => {
         this.showSpinner = false;
         this.posts$ = of(data);

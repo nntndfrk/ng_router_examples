@@ -14,7 +14,7 @@ export class Nl2brDirective {
   ) {
   }
 
-  @HostBinding() get innerHtml() {
+  @HostBinding('innerHtml') get fixedValue() {
     return this.nl2br(this.appNl2br);
   }
 
